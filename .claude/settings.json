@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(try { $r=Invoke-WebRequest -Uri \"http://localhost:3003\" -UseBasicParsing -TimeoutSec 5; Write-Output \"HTTP $\\($r.StatusCode\\) — dashboard is UP at http://localhost:3003\" } catch { Write-Output \"err: $\\($_.Exception.Message\\)\" })"
+    ]
+  }
+}
