@@ -18,9 +18,20 @@ export default function Sidebar({
 }: Props) {
   return (
     <aside className="flex h-full w-full flex-col border-r border-gray-200 bg-white sm:w-80 md:w-96">
-      <header className="flex items-center gap-2 bg-wa-dark px-4 py-4 text-white">
-        <span className="text-lg">💬</span>
-        <h1 className="text-base font-semibold">WhatsApp AI Agent</h1>
+      <header className="flex items-center justify-between gap-2 bg-wa-dark px-4 py-4 text-white">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">💬</span>
+          <h1 className="text-base font-semibold">ESGastraa Inbox</h1>
+        </div>
+        <button
+          onClick={async () => {
+            await fetch("/api/auth/logout", { method: "POST" });
+            window.location.href = "/login";
+          }}
+          className="rounded-md border border-white/30 px-2.5 py-1 text-xs hover:bg-white/10"
+        >
+          Logout
+        </button>
       </header>
 
       <div className="flex-1 overflow-y-auto">
