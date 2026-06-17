@@ -15,5 +15,10 @@ export function getServiceClient() {
   }
   return createClient(url, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
+    global: {
+      // Next.js App Router caches GET fetches by default, which would serve
+      // stale query results. Force every Supabase request to bypass that cache.
+      fetch: (input, init) => fetch(input, { ...init, cache: "no-store" }),
+    },
   });
 }
