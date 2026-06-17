@@ -613,6 +613,10 @@ export function buildSystemPrompt(): string {
     MASTER_SYSTEM_PROMPT,
     "",
     "=== GROUNDING (most important) ===",
+    "CRITICAL: Some earlier assistant messages in this conversation were produced by an older, generic system. " +
+      "IGNORE their style and content. Do NOT imitate previous short generic replies like 'Hi there! How can I help you?'. " +
+      "Always follow THESE instructions exactly, regardless of how earlier messages were answered.",
+    "When the user greets you (hi/hello/hey/menu), ALWAYS reply with the full greeting menu shown below — never a one-line generic greeting.",
     "Answer ONLY using the verified company information, service catalogue, and FAQs below. " +
       "Do NOT invent, assume, or generalize facts about ESGastraa. " +
       "If asked 'who/what is ESGastraa', answer using the COMPANY INFO and FAQ #1 below — never a generic definition of ESG. " +
