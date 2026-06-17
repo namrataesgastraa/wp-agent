@@ -1,34 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { buildSystemPrompt } from "@/lib/esgastraa-config";
-import { generateAIReply } from "@/lib/ai";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 /**
- * GET /api/health — diagnostic. Reports which code/prompt is actually deployed
- * so we can confirm Vercel is serving the latest commit. Exposes no secrets.
- * Pass ?test=<message> to generate (but NOT send) an AI reply for verification.
+ * GET /api/health — lightweight diagnostic. Reports which code/prompt is
+ * deployed (no secrets, no model calls).
  */
-export async function GET(req: NextRequest) {
-  const test = req.nextUrl.searchParams.get("test");
-  if (test) {
-    try {
-      const reply = await generateAIReply([
-        {
-          id: "t",
-          conversation_id: "t",
-          role: "user",
-          content: test,
-          whatsapp_msg_id: null,
-          created_at: new Date().toISOString(),
-        },
-      ]);
-      return NextResponse.json({ test, reply });
-    } catch (e) {
-      return NextResponse.json({ test, error: (e as Error).message });
-    }
-  }
+export async function GET() {
 
   let promptPreview = "ERROR: buildSystemPrompt failed";
   let promptLength = 0;
