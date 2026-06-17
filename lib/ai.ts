@@ -29,8 +29,12 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export async function generateAIReply(history: Message[]): Promise<string> {
   const client = getClient();
   const model = process.env.OPENROUTER_MODEL || DEFAULT_MODEL;
-  // Env var overrides the built-in ESGastraa prompt if explicitly set.
-  const systemPrompt = process.env.AI_SYSTEM_PROMPT || buildSystemPrompt();
+  // The ESGastraa "Astra" prompt is ALWAYS used. AI_SYSTEM_PROMPT, if set, is
+  // only appended as extra guidance — it can never replace the knowledge base.
+  const extra = process.env.AI_SYSTEM_PROMPT?.trim();
+  const systemPrompt = extra
+    ? `${buildSystemPrompt()}\n\n=== ADDITIONAL INSTRUCTIONS ===\n${extra}`
+    : buildSystemPrompt();
 
   let lastErr: unknown;
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
